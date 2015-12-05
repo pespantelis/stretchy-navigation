@@ -1,10 +1,12 @@
-@import 'bourbon'; // http://bourbon.io/
+@import 'bourbon/bourbon'; // http://bourbon.io/
 
-@import '../partials/variables'; // colors, fonts etc...
+@import 'partials/reset'; // http://meyerweb.com/eric/tools/css/reset/
 
-@import '../partials/mixins'; // custom mixins
+@import 'partials/variables'; // colors, fonts etc...
 
-@import '../partials/layout'; // responsive grid and media queries
+@import 'partials/mixins'; // custom mixins
+
+@import 'partials/layout'; // responsive grid and media queries
 
 /* -------------------------------- 
 
