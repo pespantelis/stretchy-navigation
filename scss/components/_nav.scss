@@ -1,0 +1,239 @@
+/* --------------------------------
+
+Stretchy Nav style - common to:
+ - basic navigation
+ - add-content navigation
+ - edit-content navigation
+
+-------------------------------- */
+
+.cd-stretchy-nav {
+  position: fixed;
+  z-index: 2;
+  top: 40px;
+  right: 5%;
+
+  .stretchy-nav-bg {
+    /* this is the stretching navigation background */
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background: $color-2;
+    box-shadow: 0 1px 4px rgba(#000, .2);
+    @include transition(height .2s, box-shadow .2s);
+  }
+
+  &.nav-is-visible .stretchy-nav-bg {
+    height: 100%;
+    box-shadow: 0 6px 30px rgba(#000, .2);
+  }
+}
+
+.cd-nav-trigger {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  /* replace text with image */
+  overflow: hidden;
+  white-space: nowrap;
+  color: transparent;
+
+  span, span::after, span::before {
+    /* this is the hamburger icon */
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    background-color: $color-3;
+  }
+
+  span {
+    /* middle line of the hamburger icon */
+    @include center;
+    @include transition(background-color .2s);
+  }
+
+  span::after, span::before {
+    /* top and bottom lines of the hamburger icon */
+    content: '';
+    top: 0;
+    left: 0;
+    @include backface-visibility(hidden);
+    @include transition(transform .2s);
+  }
+
+  span::before {
+    @include transform(translateY(-6px));
+  }
+
+  span::after {
+    @include transform(translateY(6px));
+  }
+
+  .no-touch &:hover ~ .stretchy-nav-bg {
+    box-shadow: 0 6px 30px rgba(#000, .2);
+  }
+
+  .nav-is-visible & {
+
+    span {
+      background-color: transparent;
+    }
+
+    span::before {
+      @include transform(rotate(-45deg));
+    }
+
+    span::after {
+      @include transform(rotate(45deg));
+    }
+  }
+}
+
+.cd-stretchy-nav ul {
+  position: relative;
+  z-index: 2;
+  padding: 60px 0 0;
+  visibility: hidden;
+  @include transition(visibility .3s);
+  text-align: right;
+
+  a {
+    position: relative;
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 calc(1em + 60px) 0 1em;
+    color: rgba($color-3, .7);
+    font-size: 1.4rem;
+    @include transition(color .2s);
+
+    &::after {
+      /* navigation item icons */
+      content: '';
+      position: absolute;
+      height: 16px;
+      width: 16px;
+      right: 22px;
+      top: 50%;
+      @include transform(translateY(-50%) scale(0));
+      opacity: .6;
+      background: url(../img/cd-sprite-1.svg) no-repeat 0 0;
+    }
+
+    &::before {
+      /* line visible next to the active navigation item */
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 16px;
+      top: 50%;
+      right: 60px;
+      @include transform(translateX(3px) translateY(-50%) scaleY(0));
+      background-color: $color-4;
+    }
+  }
+
+  li:first-of-type a::after {
+    /* change custom icon using image sprites */
+    background-position: -32px 0;
+  }
+
+  li:nth-of-type(2) a::after {
+    background-position: -64px 0;
+  }
+
+  li:nth-of-type(3) a::after {
+    background-position: -48px 0;
+  }
+
+  li:nth-of-type(4) a::after {
+    background-position: 0 0;
+  }
+
+  li:nth-of-type(5) a::after {
+    background-position: -16px 0;
+  }
+
+  span {
+    /* navigation item labels */
+    display: block;
+    opacity: 0;
+    @include transform(translateX(-25px));
+  }
+}
+
+.cd-stretchy-nav.nav-is-visible ul {
+  visibility: visible;
+
+  a::after {
+    /* navigation item icons */
+    @include transform(translateY(-50%) scale(1));
+    @include animation(scaleIn .15s backwards);
+    @include transition(opacity .2s);
+  }
+
+  a.active {
+    color: $color-3;
+
+    &::after {
+      opacity: 1;
+    }
+
+    &::before {
+      @include transform(translateX(3px) translateY(-50%) scaleY(1));
+      @include transition(transform .15s .3s);
+    }
+  }
+
+  span {
+    opacity: 1;
+    @include transform(translateX(0));
+    @include animation(slideIn .15s backwards);
+    @include transition(transform .2s);
+  }
+
+  .no-touch & a:hover {
+    color: $color-3;
+
+    &::after {
+      opacity: 1;
+    }
+
+    span {
+      @include transform(translateX(-5px));
+    }
+  }
+
+  li:first-of-type a::after,
+  li:first-of-type span {
+    @include animation-delay(.05s);
+  }
+
+  li:nth-of-type(2) a::after,
+  li:nth-of-type(2) span {
+    @include animation-delay(.1s);
+  }
+
+  li:nth-of-type(3) a::after,
+  li:nth-of-type(3) span {
+    @include animation-delay(.15s);
+  }
+
+  li:nth-of-type(4) a::after,
+  li:nth-of-type(4) span {
+    @include animation-delay(.2s);
+  }
+
+  li:nth-of-type(5) a::after,
+  li:nth-of-type(5) span {
+    @include animation-delay(.25s);
+  }
+}
