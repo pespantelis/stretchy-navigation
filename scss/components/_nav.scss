@@ -212,28 +212,11 @@ Stretchy Nav style - common to:
     }
   }
 
-  li:first-of-type a::after,
-  li:first-of-type span {
-    @include animation-delay(.05s);
-  }
-
-  li:nth-of-type(2) a::after,
-  li:nth-of-type(2) span {
-    @include animation-delay(.1s);
-  }
-
-  li:nth-of-type(3) a::after,
-  li:nth-of-type(3) span {
-    @include animation-delay(.15s);
-  }
-
-  li:nth-of-type(4) a::after,
-  li:nth-of-type(4) span {
-    @include animation-delay(.2s);
-  }
-
-  li:nth-of-type(5) a::after,
-  li:nth-of-type(5) span {
-    @include animation-delay(.25s);
+  @for $i from 1 to $nav-items+1 {
+    li:nth-of-type(#{$i}) {
+      a::after, span {
+        @include animation-delay($i * 0.05 + s);
+      }
+    }
   }
 }
